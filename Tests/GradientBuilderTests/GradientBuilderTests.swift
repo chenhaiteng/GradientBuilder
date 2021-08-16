@@ -12,6 +12,11 @@
     
     final class GradientBuilderTests: XCTestCase {
         func testBuilder() {
+            let empty_g = createGradient {
+                
+            }
+            XCTAssertTrue(empty_g.stops.isEmpty)
+            
             let basic_g = createGradient {
                 Color.red
                 Color.blue
@@ -68,15 +73,57 @@
             logSeperate()
             
             let not_available_g = createGradient {
+                (1.0,1.0,1.0,1.0)
                 if #available(macOS 13, *) {
                     Color.red
                 } else {
                     Color.blue
                 }
+                (255, 255, 255, 255)
             }
             
-//            XCTAssertEqual(not_available_g.stops.count, 0)
-            XCTAssertEqual(not_available_g.stops[0].color, Color.blue)
+            XCTAssertEqual(not_available_g.stops[1].color, Color.blue)
+            
+            logSeperate()
+            
+            let stop_g = createGradient {
+                (Color.red, 0.0)
+                (Color.blue, 0.5)
+                (Color.yellow, 1.0)
+            }
+            XCTAssertEqual(stop_g.stops.count, 3)
+            XCTAssertEqual(stop_g.stops[0].color, Color.red)
+            
+            logSeperate()
+            
+            let stop_if_true_g = createGradient {
+                if flag_true {
+                    (Color.red, 0.0)
+                    (Color.blue, 0.5)
+                    (Color.yellow, 1.0)
+                } else {
+                    (Color.blue, 0.0)
+                    (Color.yellow, 1.0)
+                    (Color.red, 0.0)
+                }
+            }
+            XCTAssertEqual(stop_if_true_g.stops.count, 3)
+            XCTAssertEqual(stop_if_true_g.stops[0].color, Color.red)
+            
+            logSeperate()
+            
+            let stop_if_false_g = createGradient {
+                if flag_false {
+                    (Color.red, 0.0)
+                    (Color.blue, 0.5)
+                    (Color.yellow, 1.0)
+                } else {
+                    (Color.blue, 0.0)
+                    (Color.yellow, 1.0)
+                }
+            }
+            XCTAssertEqual(stop_if_false_g.stops.count, 2)
+            XCTAssertEqual(stop_if_false_g.stops[0].color, Color.blue)
             
             logSeperate()
         }

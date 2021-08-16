@@ -14,17 +14,33 @@ func testLog(_ str: String) {
 
 @resultBuilder
 @frozen public enum GradientBuilder {
-    public typealias Component = [Color]
     public typealias BasicExpression = Color
+    public typealias Component = [BasicExpression]
+    public typealias StopExpression = Gradient.Stop
+    public typealias StopComponent = [StopExpression]
+    public static func buildBlock() -> Component {
+        return []
+    }
     
     public static func buildBlock(_ components: Component...) -> Component {
         testLog("\(#function)")
         return components.flatMap { $0 }
     }
+    
+    public static func buildBlock(_ components: StopComponent...) -> StopComponent {
+        return components.flatMap { $0 }
+    }
 }
 
+public typealias ColorStop = (color: Color, location: CGFloat)
 public typealias RGBA = (red:Int, green:Int, blue:Int, alpha:Int)
 public typealias RGBAF = (red:Double, green:Double, blue:Double, alpha:Double)
+
+extension Gradient.Stop {
+    init(_ stop: ColorStop) {
+        self.init(color: stop.color, location: stop.location)
+    }
+}
 
 public func RGBAtoColor(_ rgba: RGBA) -> Color {
     return Color(red: Double(rgba.red)/255.0,
@@ -51,6 +67,14 @@ extension GradientBuilder { // Expressions
     public static func buildExpression(_ rgbaf: RGBAF) -> Component {
         testLog("\(#function): rgba float")
         return [RGBAFtoColor(rgbaf)]
+    }
+    
+    public static func buildExpression(_ stop: StopExpression) -> StopComponent {
+        return [stop]
+    }
+    
+    public static func buildExpression(_ stop: ColorStop) -> StopComponent {
+        return [Gradient.Stop(color: stop.color, location: stop.location)]
     }
 }
 
@@ -79,6 +103,10 @@ extension GradientBuilder { // Final Result
         testLog("\(#function):gradient")
         return Gradient(colors: component)
     }
+    
+    public static func buildFinalResult(_ component: StopComponent) -> Gradient {
+        return Gradient(stops: component)
+    }
 }
 
 extension GradientBuilder { // Control-flow
@@ -101,6 +129,27 @@ extension GradientBuilder { // Control-flow
         testLog("\(#function)")
         return components.flatMap { $0 }
     }
+    
+    public static func buildEither(first component: StopComponent) -> StopComponent {
+        testLog("\(#function) 2")
+        return component
+    }
+    
+    public static func buildEither(second component: StopComponent) -> StopComponent {
+        testLog("\(#function) 2")
+        return component
+    }
+    
+    public static func buildOptional(_ component: StopComponent?) -> StopComponent {
+        testLog("\(#function) 2")
+        return component ?? []
+    }
+    
+    public static func buildArray(_ components: [StopComponent]) -> StopComponent {
+        testLog("\(#function) 2")
+        return components.flatMap { $0 }
+    }
+    
 }
 
 extension GradientBuilder { // Availablity
