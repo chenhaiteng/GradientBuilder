@@ -10,8 +10,21 @@
         print("----")
     }
     
+    enum GrayGradient {
+        @GradientBuilder static subscript(_ degree: Int) -> Gradient {
+            if degree > 0 {
+                for i in 0..<degree {
+                    Color.white.opacity(Double(i)/Double(degree))
+                }
+            } else {
+                Color.white
+            }
+        }
+    }
+    
     final class GradientBuilderTests: XCTestCase {
         func testBuilder() {
+            
             let empty_g = createGradient {
                 
             }
@@ -98,13 +111,13 @@
             
             let stop_if_true_g = createGradient {
                 if flag_true {
-                    (Color.red, 0.0)
-                    (Color.blue, 0.5)
-                    (Color.yellow, 1.0)
+                    Gradient.Stop(color: .red, location: 0.2)
+                    (.blue, 0.5)
+                    (.yellow, 1.0)
                 } else {
-                    (Color.blue, 0.0)
-                    (Color.yellow, 1.0)
-                    (Color.red, 0.0)
+                    (.blue, 0.0)
+                    (.yellow, 1.0)
+                    (.red, 0.0)
                 }
             }
             XCTAssertEqual(stop_if_true_g.stops.count, 3)
@@ -124,6 +137,11 @@
             }
             XCTAssertEqual(stop_if_false_g.stops.count, 2)
             XCTAssertEqual(stop_if_false_g.stops[0].color, Color.blue)
+            
+            logSeperate()
+            
+            let gray_g = GrayGradient[3]
+            XCTAssertEqual(gray_g.stops.count, 3)
             
             logSeperate()
         }
