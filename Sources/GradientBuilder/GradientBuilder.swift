@@ -163,3 +163,9 @@ extension GradientBuilder { // Availablity
         return component
     }
 }
+
+public extension Gradient {
+    init(@GradientBuilder _ builder: ()-> Gradient) {
+        self = builder()
+    }
+}
