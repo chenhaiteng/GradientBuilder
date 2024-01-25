@@ -98,7 +98,12 @@ extension GradientBuilder { // Final Result
             return RadialGradient(gradient: Gradient(colors: component), center: .center, startRadius: 0.0, endRadius: 30.0)
         }
     
-    // For test case
+    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    public static func buildFinalResult(_ component: Component) -> EllipticalGradient {
+        testLog("\(#function):elliptical")
+        return EllipticalGradient(gradient: Gradient(colors: component), center: .center, startRadiusFraction: 0.0, endRadiusFraction: 0.5)
+    }
+    
     public static func buildFinalResult(_ component: Component) -> Gradient {
         testLog("\(#function):gradient")
         return Gradient(colors: component)
