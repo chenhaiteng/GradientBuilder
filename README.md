@@ -3,9 +3,18 @@
 For design detail, read [Go through swift result builders](https://chenhaiteng.github.io/swift/2021/08/16/go-through-swift-result-builders.html)
 
 ## Installation:
+
+### CocoaPods
+GradientBuilder is now available through [CocoaPods](https://cocoapods.org). To install
+it, simply add the following line to your Podfile:
+
+```ruby
+pod 'GradientBuilder'
+```
+
+### Swift Package Manager
 GradientBuilder is published with Swift Package Manager, you can get more information at ![Swift Package Manager(GitHub)](https://github.com/apple/swift-package-manager), ![Package Manager(swift.org)](https://swift.org/package-manager/), and ![Swift Packages(Apple)](https://developer.apple.com/documentation/swift_packages)
 
-### Install GradientBuilder Step by Step
 #### - Add to Xcode(To use this package in your application):
 
 1. File > Swift Packages > Add Package Dependency...
