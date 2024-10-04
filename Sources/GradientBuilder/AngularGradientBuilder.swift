@@ -17,10 +17,3 @@ public extension AngularGradient {
     }
 }
 
-#Preview {
-    AngularGradient {
-        Color.red
-        Color.green
-        Color.blue
-    }
-}

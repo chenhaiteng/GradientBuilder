@@ -13,6 +13,9 @@ let package = Package(
         .library(
             name: "GradientBuilder",
             targets: ["GradientBuilder"]),
+        .library(
+            name: "GradientBuilderSamples",
+            targets: ["GradientBuilderSamples"])
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -25,6 +28,9 @@ let package = Package(
             name: "GradientBuilder",
             dependencies: [],
             swiftSettings: [.define("DEBUG", .when(configuration: .debug))]),
+        .target(
+            name: "GradientBuilderSamples",
+            dependencies: ["GradientBuilder"]),
         .testTarget(
             name: "GradientBuilderTests",
             dependencies: ["GradientBuilder"],

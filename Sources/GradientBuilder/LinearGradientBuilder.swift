@@ -12,11 +12,3 @@ public extension LinearGradient {
         self.init(gradient: builder(), startPoint: startPoint, endPoint: endPoint)
     }
 }
-
-#Preview {
-    LinearGradient {
-        Color.red
-        Color.green
-        Color.blue
-    }
-}

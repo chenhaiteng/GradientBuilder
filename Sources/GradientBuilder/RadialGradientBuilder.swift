@@ -12,11 +12,3 @@ public extension RadialGradient {
         self.init(gradient: builder(), center: center, startRadius: startRadius, endRadius: endRadius)
     }
 }
-
-#Preview {
-    RadialGradient {
-        Color.red
-        Color.green
-        Color.blue
-    }
-}
