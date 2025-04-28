@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.version          = '1.2.0'
   s.summary          = 'A result builder to make create gradient easier'
 # s.swift_version:begin
-  s.swift_version  = '6.1.0'
+  s.swift_version  = '6.0.0'
   # s.swift_version    = '${SWIFT_VERSION}'
 
 # s.platform:begin
